@@ -19,6 +19,7 @@ namespace lockitPuller
 {
     public partial class Form1 : Form
     {
+        List <string> allSheets;
         public GoogleSheetsConnector sheetsConnector;
 
         public Form1()
@@ -29,6 +30,22 @@ namespace lockitPuller
         private void Form1_Load(object sender, EventArgs e)
         {
             sheetsConnector = new GoogleSheetsConnector();
+        }
+
+        private void connectButton_Click(object sender, EventArgs e)
+        {
+            var sheetID = sheetIDTextBox.Text;
+            if (sheetID.Length == 0) MessageBox.Show("Пустое поле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+            {
+                allSheets = sheetsConnector.GetAllSheetsInTable("1qHmaPT2-6_KsE9h_5XcDXIqS7wVpim_CvZusov3T04A");
+                foreach (string sheet in allSheets)
+                {
+                    allSheetsComboBox.Items.Add(sheet);
+                }
+                allSheetsComboBox.SelectedIndex = 0;
+            }
+            
         }
     }
 
@@ -75,5 +92,24 @@ namespace lockitPuller
             }
 
         }
+
+        public List<string> GetAllSheetsInTable(string spreadsheetId)
+        {
+            var spreadsheet = _sheetsService.Spreadsheets.Get(spreadsheetId).Execute();
+            var sheets = spreadsheet.Sheets;
+            List<string> foundSheets = new List<string>();
+
+            if (sheets != null)
+            {
+                foreach (var sheet in sheets)
+                {
+                    string sheetInfo = $"- {sheet.Properties.Title} (Id: {sheet.Properties.SheetId})";
+                    foundSheets.Add(sheetInfo);
+                }
+            }
+
+            return foundSheets;
+        }
+
     }
 }

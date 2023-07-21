@@ -30,6 +30,7 @@
         {
             this.sheetIDTextBox = new System.Windows.Forms.TextBox();
             this.connectButton = new System.Windows.Forms.Button();
+            this.allSheetsComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // sheetIDTextBox
@@ -47,12 +48,22 @@
             this.connectButton.TabIndex = 1;
             this.connectButton.Text = "Connect";
             this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
+            // 
+            // allSheetsComboBox
+            // 
+            this.allSheetsComboBox.FormattingEnabled = true;
+            this.allSheetsComboBox.Location = new System.Drawing.Point(12, 41);
+            this.allSheetsComboBox.Name = "allSheetsComboBox";
+            this.allSheetsComboBox.Size = new System.Drawing.Size(447, 24);
+            this.allSheetsComboBox.TabIndex = 2;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.allSheetsComboBox);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.sheetIDTextBox);
             this.Name = "Form1";
@@ -67,6 +78,7 @@
 
         private System.Windows.Forms.TextBox sheetIDTextBox;
         private System.Windows.Forms.Button connectButton;
+        private System.Windows.Forms.ComboBox allSheetsComboBox;
     }
 }
 
