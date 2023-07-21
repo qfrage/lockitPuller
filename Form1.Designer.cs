@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.sheetIDTextBox = new System.Windows.Forms.TextBox();
-            this.connectButton = new System.Windows.Forms.Button();
-            this.allSheetsComboBox = new System.Windows.Forms.ComboBox();
+            this.createLanguagesButton = new System.Windows.Forms.Button();
+            this.listIDTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // sheetIDTextBox
@@ -40,31 +40,30 @@
             this.sheetIDTextBox.Size = new System.Drawing.Size(447, 22);
             this.sheetIDTextBox.TabIndex = 0;
             // 
-            // connectButton
+            // createLanguagesButton
             // 
-            this.connectButton.Location = new System.Drawing.Point(466, 13);
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(75, 23);
-            this.connectButton.TabIndex = 1;
-            this.connectButton.Text = "Connect";
-            this.connectButton.UseVisualStyleBackColor = true;
-            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
+            this.createLanguagesButton.Location = new System.Drawing.Point(466, 41);
+            this.createLanguagesButton.Name = "createLanguagesButton";
+            this.createLanguagesButton.Size = new System.Drawing.Size(117, 23);
+            this.createLanguagesButton.TabIndex = 3;
+            this.createLanguagesButton.Text = "Формировать";
+            this.createLanguagesButton.UseVisualStyleBackColor = true;
+            this.createLanguagesButton.Click += new System.EventHandler(this.createLanguagesButton_Click);
             // 
-            // allSheetsComboBox
+            // listIDTextBox
             // 
-            this.allSheetsComboBox.FormattingEnabled = true;
-            this.allSheetsComboBox.Location = new System.Drawing.Point(12, 41);
-            this.allSheetsComboBox.Name = "allSheetsComboBox";
-            this.allSheetsComboBox.Size = new System.Drawing.Size(447, 24);
-            this.allSheetsComboBox.TabIndex = 2;
+            this.listIDTextBox.Location = new System.Drawing.Point(13, 41);
+            this.listIDTextBox.Name = "listIDTextBox";
+            this.listIDTextBox.Size = new System.Drawing.Size(447, 22);
+            this.listIDTextBox.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.allSheetsComboBox);
-            this.Controls.Add(this.connectButton);
+            this.Controls.Add(this.listIDTextBox);
+            this.Controls.Add(this.createLanguagesButton);
             this.Controls.Add(this.sheetIDTextBox);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -77,8 +76,8 @@
         #endregion
 
         private System.Windows.Forms.TextBox sheetIDTextBox;
-        private System.Windows.Forms.Button connectButton;
-        private System.Windows.Forms.ComboBox allSheetsComboBox;
+        private System.Windows.Forms.Button createLanguagesButton;
+        private System.Windows.Forms.TextBox listIDTextBox;
     }
 }
 

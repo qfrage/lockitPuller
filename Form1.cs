@@ -32,20 +32,15 @@ namespace lockitPuller
             sheetsConnector = new GoogleSheetsConnector();
         }
 
-        private void connectButton_Click(object sender, EventArgs e)
+        private void createLanguagesButton_Click(object sender, EventArgs e)
         {
             var sheetID = sheetIDTextBox.Text;
-            if (sheetID.Length == 0) MessageBox.Show("Пустое поле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
+            var listID = int.Parse(listIDTextBox.Text);
+            var allLanguages = sheetsConnector.ReadValuesFromSheet(sheetID, listID);
+            foreach (var language in allLanguages)
             {
-                allSheets = sheetsConnector.GetAllSheetsInTable("1qHmaPT2-6_KsE9h_5XcDXIqS7wVpim_CvZusov3T04A");
-                foreach (string sheet in allSheets)
-                {
-                    allSheetsComboBox.Items.Add(sheet);
-                }
-                allSheetsComboBox.SelectedIndex = 0;
+                Console.WriteLine(language);
             }
-            
         }
     }
 
@@ -90,26 +85,48 @@ namespace lockitPuller
             {
                 MessageBox.Show("Ошибка подключения к Google таблице");
             }
-
         }
-
-        public List<string> GetAllSheetsInTable(string spreadsheetId)
+        public List<string> ReadValuesFromSheet(string spreadsheetId, int sheetId)
         {
-            var spreadsheet = _sheetsService.Spreadsheets.Get(spreadsheetId).Execute();
-            var sheets = spreadsheet.Sheets;
-            List<string> foundSheets = new List<string>();
+            string range = $"{GetSheetTitleById(spreadsheetId, sheetId)}!B1:1";
+            SpreadsheetsResource.ValuesResource.GetRequest request =
+                _sheetsService.Spreadsheets.Values.Get(spreadsheetId, range);
 
-            if (sheets != null)
+            ValueRange response = request.Execute();
+            List<string> valuesList = new List<string>();
+
+            if (response.Values != null && response.Values.Count > 0)
             {
-                foreach (var sheet in sheets)
+                var firstRowValues = response.Values[0];
+                foreach (var cellValue in firstRowValues)
                 {
-                    string sheetInfo = $"- {sheet.Properties.Title} (Id: {sheet.Properties.SheetId})";
-                    foundSheets.Add(sheetInfo);
+                    if (cellValue != null)
+                    {
+                        valuesList.Add(cellValue.ToString());
+                    }
+                    else
+                    {
+                        // Если встретили пустую ячейку, прекращаем чтение.
+                        break;
+                    }
                 }
             }
 
-            return foundSheets;
+            return valuesList;
         }
 
+        private string GetSheetTitleById(string spreadsheetId, int sheetId)
+        {
+            var spreadsheet = _sheetsService.Spreadsheets.Get(spreadsheetId).Execute();
+            foreach (var sheet in spreadsheet.Sheets)
+            {
+                if (sheet.Properties.SheetId == sheetId)
+                {
+                    return sheet.Properties.Title;
+                }
+            }
+
+            throw new ArgumentException($"Sheet with Id {sheetId} not found in the spreadsheet.");
+        }
     }
 }
