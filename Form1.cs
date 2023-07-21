@@ -30,12 +30,19 @@ namespace lockitPuller
         private void Form1_Load(object sender, EventArgs e)
         {
             sheetsConnector = new GoogleSheetsConnector();
+
+            // Загрузка настроек из сохраненных значений
+            sheetIDTextBox.Text = Properties.Settings.Default.savedSheetID;
+            listIDTextBox.Text = Properties.Settings.Default.savedListID;
         }
 
         private void createLanguagesButton_Click(object sender, EventArgs e)
         {
             var sheetID = sheetIDTextBox.Text;
             var listID = int.Parse(listIDTextBox.Text);
+            Properties.Settings.Default.savedSheetID = sheetID;
+            Properties.Settings.Default.savedListID = listIDTextBox.Text;
+            Properties.Settings.Default.Save();
             var allLanguages = sheetsConnector.ReadValuesFromSheet(sheetID, listID);
             foreach (var language in allLanguages)
             {
